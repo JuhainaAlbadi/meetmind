@@ -31,7 +31,23 @@ No more spending 15–20 minutes writing meeting notes manually.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Try it Live
+
+**[https://juhainaalbadi.github.io/meetmind/](https://juhainaalbadi.github.io/meetmind/)**
+
+No installation needed — just open the link, enter your API key, and go.
+
+---
+
+## 🔑 Getting an API Key
+
+1. Sign up at [console.anthropic.com](https://console.anthropic.com)
+2. Go to **API Keys** and create a new key
+3. Paste it into the app's **API Key** field — it's saved to your browser only, never sent anywhere except Anthropic
+
+---
+
+## 🛠️ Run Locally
 
 ### 1. Clone the repo
 ```bash
@@ -39,19 +55,14 @@ git clone https://github.com/JuhainaAlbadi/meetmind.git
 cd meetmind
 ```
 
-### 2. Get a Claude API key
-Sign up at [console.anthropic.com](https://console.anthropic.com) and create an API key.
-
-### 3. Add your key
+### 2. Add your key
 ```bash
 cp config.example.js config.js
 ```
 Open `config.js` and replace `sk-ant-...` with your actual key. This file is gitignored and will never be pushed.
 
-### 4. Run it
-Open `meeting_minutes_generator.html` in your browser — no build tools or dependencies needed.
-
-> **No `config.js`?** You can also enter your key directly in the app's API Key field — it saves to your browser's localStorage.
+### 3. Open in browser
+Open `index.html` — no build tools or dependencies needed.
 
 ---
 
