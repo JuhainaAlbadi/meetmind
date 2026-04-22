@@ -6,6 +6,7 @@
 
 ---
 
+
 ## ✨ What it does
 
 Paste any meeting transcript and MeetMind instantly extracts:
@@ -41,10 +42,16 @@ cd meetmind
 ### 2. Get a Claude API key
 Sign up at [console.anthropic.com](https://console.anthropic.com) and create an API key.
 
-### 3. Run it
-Just open `index.html` in your browser — no build tools or dependencies needed.
+### 3. Add your key
+```bash
+cp config.example.js config.js
+```
+Open `config.js` and replace `sk-ant-...` with your actual key. This file is gitignored and will never be pushed.
 
-> **Note:** The app calls the Anthropic API directly from the browser. For production use, route API calls through a backend to protect your API key.
+### 4. Run it
+Open `meeting_minutes_generator.html` in your browser — no build tools or dependencies needed.
+
+> **No `config.js`?** You can also enter your key directly in the app's API Key field — it saves to your browser's localStorage.
 
 ---
 
