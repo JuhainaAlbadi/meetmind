@@ -625,7 +625,6 @@ Mike: I can allocate 2 designers starting next week..."></textarea>
   </div>
 </div>
 
-<script src="config.js"></script>
 <script>
 const SAMPLE = `Sarah (PM): Alright everyone, let's kick off. Today we're reviewing the Q3 launch plan.
 
@@ -682,9 +681,7 @@ function saveApiKey() {
 }
 
 function getApiKey() {
-  return (typeof CONFIG !== 'undefined' && CONFIG.ANTHROPIC_API_KEY !== 'sk-ant-...' ? CONFIG.ANTHROPIC_API_KEY : null)
-    || localStorage.getItem('meetmind_api_key')
-    || '';
+  return localStorage.getItem('meetmind_api_key') || '';
 }
 
 async function generateMinutes() {

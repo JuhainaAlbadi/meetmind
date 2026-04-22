@@ -55,14 +55,8 @@ git clone https://github.com/JuhainaAlbadi/meetmind.git
 cd meetmind
 ```
 
-### 2. Add your key
-```bash
-cp config.example.js config.js
-```
-Open `config.js` and replace `sk-ant-...` with your actual key. This file is gitignored and will never be pushed.
-
-### 3. Open in browser
-Open `index.html` — no build tools or dependencies needed.
+### 2. Open in browser
+Open `index.html` — no build tools or dependencies needed. Enter your API key in the app when prompted.
 
 ---
 
