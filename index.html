@@ -853,6 +853,11 @@ function getApiKey() {
 }
 
 async function generateMinutes() {
+  if (isRecording) {
+    stopRecording();
+    await new Promise(r => setTimeout(r, 600));
+  }
+
   const apiKey = getApiKey();
   if (!apiKey) {
     showError('Please enter and save your Anthropic API key first.');
