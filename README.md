@@ -2,7 +2,7 @@
 
 > Transform messy meeting transcripts into structured, actionable insights in seconds — powered by Claude AI.
 
-![MeetMind Demo](screenshot.png)
+![MeetMind Demo](Screenshot.png)
 
 ---
 
