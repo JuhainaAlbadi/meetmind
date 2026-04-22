@@ -91,13 +91,6 @@ The prompt engineering is designed to extract **named assignees**, **specific de
 
 ---
 
-## 🗺️ Roadmap
-
-- [x] Export to PDF
-- [x] Multi-language support (Arabic 🇴🇲)
-
----
-
 ## 👩‍💻 Author
 
 **Juhaina Albadi**
