@@ -97,7 +97,7 @@ The prompt engineering is designed to extract **named assignees**, **specific de
 ## 👩‍💻 Author
 
 **Juhaina Albadi**
-BSc Computer Engineering Student
+BSc Software Engineering 
 
 [![GitHub](https://img.shields.io/badge/GitHub-JuhainaAlbadi-181717?style=flat&logo=github)](https://github.com/JuhainaAlbadi)
 
