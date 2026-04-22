@@ -2,7 +2,8 @@
 
 > Transform messy meeting transcripts into structured, actionable insights in seconds — powered by Claude AI.
 
-![MeetMind Demo](Screenshot.png)(Screenshot1.png)
+<img src="Screenshot.png" width="49%"/> <img src="Screenshot1.png" width="49%"/>
+
 
 ---
 
