@@ -95,7 +95,3 @@ BSc Computer Engineering Student
 [![GitHub](https://img.shields.io/badge/GitHub-JuhainaAlbadi-181717?style=flat&logo=github)](https://github.com/JuhainaAlbadi)
 
 ---
-
-## 📄 License
-
-MIT License — feel free to use, modify, and build on this project.
