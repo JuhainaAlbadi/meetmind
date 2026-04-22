@@ -95,7 +95,6 @@ The prompt engineering is designed to extract **named assignees**, **specific de
 
 - [x] Export to PDF
 - [x] Audio recording with live transcription
-- [x] Slack integration via webhook
 - [x] Multi-language support (Arabic 🇴🇲)
 
 ---

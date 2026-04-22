@@ -537,42 +537,6 @@
   .record-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
   .record-status { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
 
-  /* Slack card */
-  .slack-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 24px;
-    margin-top: 16px;
-    display: none;
-  }
-  .slack-row { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
-  .slack-input {
-    flex: 1;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 10px 14px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .slack-input:focus { border-color: #4a154b; }
-  .btn-slack {
-    background: #4a154b;
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 10px 16px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: opacity 0.2s;
-  }
-  .btn-slack:hover { opacity: 0.85; }
 
   /* Animations */
   @keyframes fadeDown {
@@ -727,13 +691,6 @@ Mike: I can allocate 2 designers starting next week..."></textarea>
       <button class="btn-copy" onclick="resetAll()" style="color: var(--danger); border-color: rgba(247,106,124,0.3);">↺ New Meeting</button>
     </div>
 
-    <div class="slack-card" id="slack-card">
-      <div class="card-label">Send to Slack</div>
-      <div class="slack-row">
-        <input class="slack-input" id="slack-webhook" placeholder="https://hooks.slack.com/services/..." />
-        <button class="btn-slack" onclick="sendToSlack()" id="slack-btn">Send ↗</button>
-      </div>
-    </div>
   </div>
 
   <!-- GitHub Note -->
@@ -836,32 +793,6 @@ function stopRecording() {
   document.getElementById('record-status').textContent = '';
 }
 
-// ── Slack ─────────────────────────────────────────────
-async function sendToSlack() {
-  const webhook = document.getElementById('slack-webhook').value.trim();
-  if (!webhook) { alert('Please enter a Slack webhook URL.'); return; }
-  localStorage.setItem('meetmind_slack', webhook);
-
-  const blocks = document.querySelectorAll('.block-content-area');
-  let text = '*Meeting Minutes — MeetMind*\n' + '─'.repeat(30) + '\n';
-  blocks.forEach(b => { text += b.innerText + '\n\n'; });
-
-  const btn = document.getElementById('slack-btn');
-  btn.textContent = 'Sending...';
-
-  try {
-    await fetch(webhook, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text })
-    });
-    btn.textContent = '✓ Sent!';
-    setTimeout(() => btn.textContent = 'Send ↗', 3000);
-  } catch {
-    btn.textContent = 'Failed';
-    setTimeout(() => btn.textContent = 'Send ↗', 3000);
-  }
-}
 
 function loadSample() {
   document.getElementById('transcript').value = SAMPLE;
@@ -982,10 +913,6 @@ Rules:
     }
 
     renderOutput(result, transcript);
-    const slackCard = document.getElementById('slack-card');
-    slackCard.style.display = 'block';
-    const saved = localStorage.getItem('meetmind_slack');
-    if (saved) document.getElementById('slack-webhook').value = saved;
   } catch (err) {
     showError('API error. Check your connection and try again.');
   }
@@ -1111,7 +1038,6 @@ function copyAll() {
 function resetAll() {
   document.getElementById('transcript').value = '';
   document.getElementById('output-section').style.display = 'none';
-  document.getElementById('slack-card').style.display = 'none';
   stopRecording();
   hideError();
 }
