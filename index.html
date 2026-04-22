@@ -475,6 +475,19 @@
 
   .btn-sample:hover { color: var(--accent3); }
 
+  /* Print / PDF export */
+  @media print {
+    body { background: #fff !important; color: #000 !important; }
+    body::before { display: none; }
+    header, .card:not(#output-section .card), .output-actions, .stats-bar, .github-note { display: none !important; }
+    #output-section { display: block !important; }
+    .output-block { background: #fff !important; border: 1px solid #ccc !important; break-inside: avoid; }
+    .output-grid { grid-template-columns: 1fr !important; }
+    .block-title { color: #333 !important; }
+    .action-assignee, .action-due { background: #eee !important; color: #333 !important; }
+    .decision-item { border-color: #ccc !important; }
+  }
+
   /* Animations */
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-20px); }
@@ -612,6 +625,7 @@ Mike: I can allocate 2 designers starting next week..."></textarea>
 
     <div class="output-actions">
       <button class="btn-copy" onclick="copyAll()">⎘ Copy All</button>
+      <button class="btn-copy" onclick="exportPDF()" style="color: var(--accent2); border-color: rgba(247,199,106,0.3);">⬇ Export PDF</button>
       <button class="btn-copy" onclick="resetAll()" style="color: var(--danger); border-color: rgba(247,106,124,0.3);">↺ New Meeting</button>
     </div>
   </div>
@@ -870,6 +884,10 @@ function showError(msg) {
 
 function hideError() {
   document.getElementById('error-msg').style.display = 'none';
+}
+
+function exportPDF() {
+  window.print();
 }
 
 function copyAll() {

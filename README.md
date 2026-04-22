@@ -93,7 +93,7 @@ The prompt engineering is designed to extract **named assignees**, **specific de
 
 ## 🗺️ Roadmap
 
-- [ ] Export to PDF / Word
+- [x] Export to PDF
 - [ ] Support audio file input (Whisper API transcription)
 - [ ] Slack / Teams integration
 - [ ] Multi-language support (Arabic 🇴🇲)
