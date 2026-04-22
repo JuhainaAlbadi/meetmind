@@ -776,14 +776,35 @@ function startRecording() {
     document.getElementById('transcript').value = finalText + interim;
   };
 
-  recognition.onerror = () => stopRecording();
+  recognition.onerror = (e) => {
+    const messages = {
+      'not-allowed': '⚠ Microphone permission denied — allow it in your browser settings',
+      'no-speech':   '⚠ No speech detected — try speaking closer to the mic',
+      'network':     '⚠ Network error — speech recognition needs an internet connection',
+      'audio-capture': '⚠ No microphone found — check your mic is connected',
+    };
+    const status = document.getElementById('record-status');
+    status.textContent = messages[e.error] || `⚠ Error: ${e.error}`;
+    status.style.color = 'var(--danger)';
+    stopRecording();
+  };
+
   recognition.onend = () => { if (isRecording) recognition.start(); };
 
-  recognition.start();
+  try {
+    recognition.start();
+  } catch(e) {
+    document.getElementById('record-status').textContent = '⚠ Could not start microphone';
+    document.getElementById('record-status').style.color = 'var(--danger)';
+    return;
+  }
+
   isRecording = true;
   document.getElementById('record-btn').classList.add('recording');
   document.getElementById('record-label').textContent = currentLang === 'ar' ? 'إيقاف التسجيل' : 'Stop Recording';
-  document.getElementById('record-status').textContent = currentLang === 'ar' ? '● جارٍ التسجيل...' : '● Recording...';
+  const status = document.getElementById('record-status');
+  status.style.color = 'var(--danger)';
+  status.textContent = currentLang === 'ar' ? '● جارٍ التسجيل...' : '● Recording...';
 }
 
 function stopRecording() {
@@ -791,7 +812,9 @@ function stopRecording() {
   isRecording = false;
   document.getElementById('record-btn').classList.remove('recording');
   document.getElementById('record-label').textContent = currentLang === 'ar' ? 'تسجيل الاجتماع' : 'Record Meeting';
-  document.getElementById('record-status').textContent = '';
+  const st = document.getElementById('record-status');
+  st.textContent = 'Chrome / Edge only';
+  st.style.color = '';
 }
 
 
