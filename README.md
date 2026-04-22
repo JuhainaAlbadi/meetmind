@@ -94,9 +94,9 @@ The prompt engineering is designed to extract **named assignees**, **specific de
 ## 🗺️ Roadmap
 
 - [x] Export to PDF
-- [ ] Support audio file input (Whisper API transcription)
-- [ ] Slack / Teams integration
-- [ ] Multi-language support (Arabic 🇴🇲)
+- [x] Audio recording with live transcription
+- [x] Slack integration via webhook
+- [x] Multi-language support (Arabic 🇴🇲)
 
 ---
 
