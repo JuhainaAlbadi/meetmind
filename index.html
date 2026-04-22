@@ -642,7 +642,7 @@ Mike: I can allocate 2 designers starting next week..."></textarea>
         <span class="record-dot"></span>
         <span id="record-label">Record Meeting</span>
       </button>
-      <span class="record-status" id="record-status"></span>
+      <span class="record-status" id="record-status">Chrome / Edge only</span>
     </div>
 
     <button class="btn-sample" onclick="loadSample()">↓ Load sample transcript</button>
@@ -751,7 +751,8 @@ let isRecording = false;
 
 function toggleRecording() {
   if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-    alert('Speech recognition is not supported in this browser. Use Chrome or Edge.');
+    document.getElementById('record-status').textContent = '⚠ Live recording requires Chrome or Edge';
+    document.getElementById('record-status').style.color = 'var(--danger)';
     return;
   }
   isRecording ? stopRecording() : startRecording();
