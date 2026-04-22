@@ -748,8 +748,15 @@ Rules:
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      showError(`API error ${response.status}: ${data.error?.message || 'Unknown error'}`);
+      setLoading(false);
+      return;
+    }
+
     const text = data.content?.find(b => b.type === 'text')?.text || '';
-    
+
     let result;
     try {
       const cleaned = text.replace(/```json|```/g, '').trim();
