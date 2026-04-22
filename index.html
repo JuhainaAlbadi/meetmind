@@ -511,31 +511,6 @@
   }
   .lang-btn.active { background: var(--accent); color: #fff; }
 
-  /* Record button */
-  .record-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 12px;
-  }
-  .btn-record {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 10px 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-record:hover { border-color: var(--danger); color: var(--danger); }
-  .btn-record.recording { border-color: var(--danger); color: var(--danger); animation: pulse 1s ease infinite; }
-  .record-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-  .record-status { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
 
 
   /* Animations */
@@ -637,14 +612,6 @@ John: Agreed. Sarah, can you lead that by end of month?
 Sarah: Sure. I'll need design resources from Mike.
 Mike: I can allocate 2 designers starting next week..."></textarea>
 
-    <div class="record-row">
-      <button class="btn-record" id="record-btn" onclick="toggleRecording()">
-        <span class="record-dot"></span>
-        <span id="record-label">Record Meeting</span>
-      </button>
-      <span class="record-status" id="record-status">Chrome / Edge only</span>
-    </div>
-
     <button class="btn-sample" onclick="loadSample()">↓ Load sample transcript</button>
 
     <div class="options-row">
@@ -739,83 +706,10 @@ function setLang(lang) {
   output.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
   document.getElementById('btn-text').textContent =
     lang === 'ar' ? '✦ استخراج محضر الاجتماع' : '✦ Generate Meeting Minutes';
-  document.getElementById('record-label').textContent =
-    lang === 'ar' ? 'تسجيل الاجتماع' : 'Record Meeting';
 }
 
 (function initLang() { setLang(currentLang); })();
 
-// ── Audio recording ───────────────────────────────────
-let recognition = null;
-let isRecording = false;
-
-function toggleRecording() {
-  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-    document.getElementById('record-status').textContent = '⚠ Live recording requires Chrome or Edge';
-    document.getElementById('record-status').style.color = 'var(--danger)';
-    return;
-  }
-  isRecording ? stopRecording() : startRecording();
-}
-
-function startRecording() {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = currentLang === 'ar' ? 'ar-SA' : 'en-US';
-
-  let finalText = document.getElementById('transcript').value;
-
-  recognition.onresult = (e) => {
-    let interim = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) finalText += e.results[i][0].transcript + ' ';
-      else interim = e.results[i][0].transcript;
-    }
-    document.getElementById('transcript').value = finalText + interim;
-  };
-
-  recognition.onerror = (e) => {
-    const messages = {
-      'not-allowed': '⚠ Microphone permission denied — allow it in your browser settings',
-      'no-speech':   '⚠ No speech detected — try speaking closer to the mic',
-      'network':     '⚠ Network error — speech recognition needs an internet connection',
-      'audio-capture': '⚠ No microphone found — check your mic is connected',
-    };
-    const status = document.getElementById('record-status');
-    status.textContent = messages[e.error] || `⚠ Error: ${e.error}`;
-    status.style.color = 'var(--danger)';
-    stopRecording();
-  };
-
-  recognition.onend = () => { if (isRecording) recognition.start(); };
-
-  try {
-    recognition.start();
-  } catch(e) {
-    document.getElementById('record-status').textContent = '⚠ Could not start microphone';
-    document.getElementById('record-status').style.color = 'var(--danger)';
-    return;
-  }
-
-  isRecording = true;
-  document.getElementById('record-btn').classList.add('recording');
-  document.getElementById('record-label').textContent = currentLang === 'ar' ? 'إيقاف التسجيل' : 'Stop Recording';
-  const status = document.getElementById('record-status');
-  status.style.color = 'var(--danger)';
-  status.textContent = currentLang === 'ar' ? '● جارٍ التسجيل...' : '● Recording...';
-}
-
-function stopRecording() {
-  if (recognition) { recognition.onend = null; recognition.stop(); }
-  isRecording = false;
-  document.getElementById('record-btn').classList.remove('recording');
-  document.getElementById('record-label').textContent = currentLang === 'ar' ? 'تسجيل الاجتماع' : 'Record Meeting';
-  const st = document.getElementById('record-status');
-  st.textContent = 'Chrome / Edge only';
-  st.style.color = '';
-}
 
 
 function loadSample() {
@@ -853,11 +747,6 @@ function getApiKey() {
 }
 
 async function generateMinutes() {
-  if (isRecording) {
-    stopRecording();
-    await new Promise(r => setTimeout(r, 600));
-  }
-
   const apiKey = getApiKey();
   if (!apiKey) {
     showError('Please enter and save your Anthropic API key first.');
@@ -1067,7 +956,6 @@ function copyAll() {
 function resetAll() {
   document.getElementById('transcript').value = '';
   document.getElementById('output-section').style.display = 'none';
-  stopRecording();
   hideError();
 }
 </script>
